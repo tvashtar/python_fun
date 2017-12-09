@@ -23,7 +23,7 @@ from creds import cdict
 plt.style.use('tableau10')
 
 def get_raw_weather(lat='40.674766',lon='-73.978959'):
-    data = requests.get('https://api.forecast.io/forecast/8d786045062338f198a55eff159b4e2c/{},{}'.format(lat,lon)).json()
+    data = requests.get("https://api.forecast.io/forecast/cdict['forecastio_api_key']/{},{}".format(lat,lon)).json()
     return data
 
 def convert_time(x):
