@@ -20,8 +20,6 @@ from email.mime.multipart import MIMEMultipart
 from email.utils import formatdate
 from creds import cdict
 
-plt.style.use('tableau10')
-
 def get_raw_weather(lat='40.674766',lon='-73.978959'):
     data = requests.get("https://api.forecast.io/forecast/cdict['forecastio_api_key']/{},{}".format(lat,lon)).json()
     return data
@@ -80,7 +78,7 @@ if __name__ == '__main__':
     ax2.yaxis.set_ticks(rain_ticks)
     ax2.yaxis.set_ticklabels(rain_ticknames, color = rain_color, size=size)
 
-    ax.xaxis.set_ticklabels(['8am','10am','Noon','2pm','4pm','6pm','8pm','10pm'],minor=True, color=plain_color,size=size)
+    ax.xaxis.set_ticklabels(['','10am','Noon','2pm','4pm','6pm','8pm',''],minor=True, color=plain_color,size=size)
     ax.xaxis.set_ticklabels(['8am','10pm'], color=plain_color, size=size)
     ax.set_xlabel(doi)
     ax.annotate('Max: {:.0f}°F'.format(today_slice.apparentTemperature.max()),xy=(doi+' 09:00:00', 95), color=plain_color, size=size)
@@ -97,8 +95,8 @@ if __name__ == '__main__':
     subject = coat+", "+umbrella
 
     msg = MIMEMultipart(
-        From="conorlaver@gmail.com",
-        To="conorlaver@gmail.com",
+        From=cdict["emailuser"],
+        To=cdict["emailuser"],
         Date=formatdate(localtime=True),
         Subject=subject
         )
@@ -118,5 +116,5 @@ if __name__ == '__main__':
     server = smtplib.SMTP("smtp.gmail.com:587")
     server.starttls()
     server.login(cdict["emailuser"], cdict["emailpass"])
-    server.sendmail(cdict["emailuser"], 'conorlaver@gmail.com', msg.as_string())
+    server.sendmail(cdict["emailuser"], cdict["emailuser"], msg.as_string())
     server.quit()
